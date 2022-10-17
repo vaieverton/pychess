@@ -90,5 +90,3 @@ class Piece():
             role = 'Peão'
 
         return f'{role} {string.ascii_lowercase[self.x].upper()}{self.y} {team}'
-
-    

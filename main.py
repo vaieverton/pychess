@@ -36,9 +36,9 @@ def read_initial_pieces():
 
             pieces.append(piece)
 
-def draw_pieces(_screen, _pieces):
-    for piece in _pieces:
-        piece.image(_screen, square_size)
+def draw_pieces(screen):
+    for piece in pieces:
+        piece.image(screen, square_size)
 
 def main():
     pygame.init()
@@ -46,32 +46,39 @@ def main():
     pygame.display.set_caption('Chess')
 
     screen = pygame.display.set_mode(size)
+    
 
     mousex, mousey = 0, 0
 
     pressed = False
-    piece_selected = None
+    current_piece = None
+    selected = False
+
+    chech_mate = False
 
     read_initial_pieces()
-    while 1:
+
+    while not chech_mate:
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
 
-        # mouse clicked
-        if pygame.mouse.get_pressed()[0] == True:
-            mousex, mousey = pygame.mouse.get_pos()
-            x, y = convert_click_to_coordinates(mousex, mousey, square_size)
-            if piece_selected:
-                piece_selected.move(x, y)
+            if event.type == pygame.MOUSEBUTTONUP:
+                mousex, mousey = pygame.mouse.get_pos()
 
-            else:
-                piece_selected = locate_piece_clicked(x, y, pieces)
-            pressed = True
+                x, y = convert_click_to_coordinates(mousex, mousey, square_size)
+
+                if current_piece and selected:
+                    if current_piece.x != x or current_piece.y != y:
+                        current_piece.move(x, y)
+                        selected = False
+                else:
+                    current_piece = locate_piece_clicked(x, y, pieces)
+                    selected = True
 
         draw_board(screen)
             
-        draw_pieces(screen, pieces)
+        draw_pieces(screen)
 
         pygame.display.flip()
 
