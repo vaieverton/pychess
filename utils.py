@@ -1,3 +1,5 @@
+import string
+
 def isEven(num):
     return num % 2 == 0
 
@@ -6,14 +8,14 @@ def read_piece(piece_s):
 
     x, y, role, team = piece_s[0]
 
-    return x, y, role, team
+    return string.ascii_lowercase.index(x.lower()), int(y), role, team
 
 def convert_click_to_coordinates(x, y, square_size):
-    _x = int(x / square_size)
-    _y = 8 - int(y / square_size)
+    x = int(x / square_size)
+    y = 8 - int(y / square_size)
 
-    return _x, _y
-    
+    return x, y
+
 def locate_piece_clicked(click_x, click_y, pieces):
     for piece in pieces:
         if piece.x == click_x and piece.y == click_y:

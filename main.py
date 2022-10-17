@@ -59,28 +59,20 @@ def main():
                 return
 
         # mouse clicked
-        if pygame.mouse.get_pressed()[0] == True and not piece_selected:
+        if pygame.mouse.get_pressed()[0] == True:
             mousex, mousey = pygame.mouse.get_pos()
             x, y = convert_click_to_coordinates(mousex, mousey, square_size)
-            piece_selected = locate_piece_clicked(x, y, pieces)
+            if piece_selected:
+                piece_selected.move(x, y)
+
+            else:
+                piece_selected = locate_piece_clicked(x, y, pieces)
             pressed = True
 
-        if pygame.mouse.get_pressed()[0] == True and pressed and piece_selected:
-            mousex, mousey = pygame.mouse.get_pos()
-            x, y = convert_click_to_coordinates(mousex, mousey, square_size)
-            print(x, y)
-            piece_selected.move(x, y)
-            piece_selected = None
-            pressed = False
-
-        
         draw_board(screen)
             
         draw_pieces(screen, pieces)
 
-
         pygame.display.flip()
-
-
 
 if __name__ == '__main__': main()

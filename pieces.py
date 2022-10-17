@@ -4,8 +4,8 @@ import string
 
 class Piece():
     def __init__(self, x, y, role, team) -> None:
-        self.x = string.ascii_lowercase.index(x.lower())
-        self.y = int(y)
+        self.x = x
+        self.y = y
         self.role = role
         self.team = team
 
@@ -21,6 +21,8 @@ class Piece():
     def move(self, x, y):
         self.x = x
         self.y = y
+
+        print(x, y)
 
     def image(self, screen, square_size):
         width, _ = pygame.display.get_surface().get_size()
