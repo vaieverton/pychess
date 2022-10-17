@@ -18,17 +18,33 @@ class Piece():
     def team(self):
         return self.team
     
-    def move(self, x, y):
-        self.x = x
-        self.y = y
+    def move(self, x, y, pieces):
+        if self.validate_move(x, y, pieces):
+            self.x = x
+            self.y = y
+        else:
+            print('Movimento Inválido!')
+    
+    def validate_move(self, x, y, pieces):
+        if self.role == 'P':
+            if self.team =='B':
+                if y == self.y + 1:
+                    return True
+                if self.y == 2 and self.y + 2 == y:
+                    return True
 
-        print(x, y)
+            if self.team == 'P':
+                if y == self.y - 1:
+                    return True
+                if self.y == 7 and self.y - 2 == y:
+                    return True
+        return False
 
     def image(self, screen, square_size):
-        width, _ = pygame.display.get_surface().get_size()
+        _, height = pygame.display.get_surface().get_size()
 
         left = self.x * square_size
-        top = width - self.y * square_size
+        top = height - self.y * square_size
 
         img_size = (square_size * 0.95, square_size * 0.95)
 

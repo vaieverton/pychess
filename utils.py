@@ -16,7 +16,7 @@ def convert_click_to_coordinates(x, y, square_size):
 
     return x, y
 
-def locate_piece_clicked(click_x, click_y, pieces):
+def select_piece_clicked(click_x, click_y, pieces):
     for piece in pieces:
         if piece.x == click_x and piece.y == click_y:
             print(piece.type_formated())

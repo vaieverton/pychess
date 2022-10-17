@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from pieces import Piece
-from utils import convert_click_to_coordinates, isEven, read_piece, locate_piece_clicked
+from utils import convert_click_to_coordinates, isEven, read_piece, select_piece_clicked
 
 green = (0, 136, 71)
 white = (240, 240, 240)
@@ -46,17 +46,18 @@ def main():
     pygame.display.set_caption('Chess')
 
     screen = pygame.display.set_mode(size)
-    
 
     mousex, mousey = 0, 0
 
-    pressed = False
     current_piece = None
     selected = False
 
     chech_mate = False
 
     read_initial_pieces()
+
+    for piece in pieces:
+        print(piece.x, piece)
 
     while not chech_mate:
         for event in pygame.event.get():
@@ -70,10 +71,10 @@ def main():
 
                 if current_piece and selected:
                     if current_piece.x != x or current_piece.y != y:
-                        current_piece.move(x, y)
+                        current_piece.move(x, y, pieces)
                         selected = False
                 else:
-                    current_piece = locate_piece_clicked(x, y, pieces)
+                    current_piece = select_piece_clicked(x, y, pieces)
                     selected = True
 
         draw_board(screen)
