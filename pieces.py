@@ -18,6 +18,10 @@ class Piece():
     def team(self):
         return self.team
     
+    def move(self, x, y):
+        self.x = x
+        self.y = y
+
     def image(self, screen, square_size):
         width, _ = pygame.display.get_surface().get_size()
 
@@ -27,11 +31,9 @@ class Piece():
         img_size = (square_size * 0.95, square_size * 0.95)
 
         picture = pygame.image.load(self.handle_image_url())
-        # picture = 
         picture = pygame.transform.scale(picture, img_size)
-        screen.blit(picture, (left, top))
 
-        return picture
+        screen.blit(picture, (left, top))
 
     def handle_image_url(self):
         team = ''
@@ -61,3 +63,30 @@ class Piece():
 
         return f'./imgs/{piece}_{team}.png'
         
+    def position_formated(self):
+        return f'{self.type_formated()} {string.ascii_lowercase[self.x].upper()}{self.y}'
+
+    def type_formated(self):
+        team = ''
+        role = ''
+        if self.team == 'P':
+            team = 'Pretas'
+        if self.team == 'B':
+            team = 'Brancas'
+
+        if self.role == 'T':
+            role = 'Torre'
+        if self.role == 'B':
+            role = 'Bispo'
+        if self.role == 'C':
+            role = 'Cavalo'
+        if self.role == 'D':
+            role = 'Dama'
+        if self.role == 'R':
+            role = 'Rei'
+        if self.role == 'P':
+            role = 'Peão'
+
+        return f'{role} {string.ascii_lowercase[self.x].upper()}{self.y} {team}'
+
+    
